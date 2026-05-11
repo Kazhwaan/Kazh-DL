@@ -49,12 +49,25 @@ def download_video_gui(url, audio_only, download_folder, subtitles, progress_var
         filename = url.split("/")[-1].split("?")[0]
         filename_label.config(text=f"Filename: {filename}")
         total_size_label.config(text="Total Size: Not Available Yet")
-        ydl_opts = {
-            'format': 'bestaudio' if audio_only else 'best',
-            'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),
-            'progress_hooks': [progress_hook],
-            'extract_flat': True,
-        }
+       # لیست مرورگرهای پیشنهادی برای تست خودکار
+        for browser in ['brave', 'chrome', 'firefox', 'edge', 'opera']:
+            try:
+                ydl_opts = {
+                    'format': 'bestaudio' if audio_only else 'best',
+                    'cookiesfrombrowser': (browser,),
+                    'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),
+                    'progress_hooks': [progress_hook],
+                    'extract_flat': True,
+                }
+                break # اگر مرورگر پیدا شد و کوکی‌ها را خواند، از حلقه خارج شو
+            except:
+                # اگر این مرورگر نصب نبود، برو سراغ بعدی
+                ydl_opts = {
+                    'format': 'bestaudio' if audio_only else 'best',
+                    'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),
+                    'progress_hooks': [progress_hook],
+                    'extract_flat': True,
+                }
         if subtitles:
             ydl_opts.update({
                 'subtitleslangs': ['en'],
