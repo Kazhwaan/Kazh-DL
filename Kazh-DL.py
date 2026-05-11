@@ -50,7 +50,7 @@ def download_video_gui(url, audio_only, download_folder, subtitles, progress_var
         filename_label.config(text=f"Filename: {filename}")
         total_size_label.config(text="Total Size: Not Available Yet")
        # لیست مرورگرهای پیشنهادی برای تست خودکار
-        for browser in ['brave', 'chrome', 'firefox', 'edge', 'opera']:
+        for browser in ['firefox', 'brave', 'chrome', 'edge', 'opera']:
             try:
                 ydl_opts = {
                     'format': 'bestaudio' if audio_only else 'best',
